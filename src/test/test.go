@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"accrazed.com/gosu/src/gosu"
+	gosu "accrazed.com/gosu/src"
 )
 
 func main() {
