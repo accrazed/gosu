@@ -1,14 +1,5 @@
 package gosu
 
-type BeatmapCompact struct {
-	difficultyRating float64
-	id               int
-	mode             Gamemode
-	status           RankStatus // same as ranked - originally a string
-	totalLength      int
-	version          string
-}
-
 type Beatmap struct {
 	BeatmapCompact
 	accuracy     float64
@@ -27,6 +18,31 @@ type Beatmap struct {
 	modeInt      int
 	passCount    int
 	playCount    int
-	ranked       RankStatus // same as status - originally an int
+	ranked       RankStatus
 	url          string
+}
+
+type BeatmapCompact struct {
+	difficultyRating float64
+	id               int
+	mode             Gamemode
+	status           RankStatus
+	totalLength      int
+	version          string
+
+	// Optional attributes
+	beatmapset    Beatmapset
+	checksum      string
+	failtimesExit [100]int
+	failtimesFail [100]int
+}
+
+type BeatmapScores struct {
+	scores    []Score
+	userScore BeatmapUserScore
+}
+
+type BeatmapUserScore struct {
+	position int
+	score    Score
 }
