@@ -1,6 +1,6 @@
 package gosu
 
-type Gamemode int
+type GameMode int
 
 const (
 	Fruits = iota
