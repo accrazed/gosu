@@ -1,9 +1,3 @@
-// TODO: implement Cursor
-// TODO: implement Event
-// TODO: implement Forum Post
-// TODO: implement Forum Topic
-// TODO: implement GameMode
-// TODO: implement Group
 // TODO: implement KudosuHistory
 // TODO: implement MultiplayerScore
 // TODO: implement MultiplayerScores
@@ -16,6 +10,5 @@
 // TODO: implement Score
 // TODO: implement Spotlight
 // TODO: implement Spotlights
-// TODO: implement Timestamp
 
 // TODO: implement WikiPage
