@@ -17,8 +17,5 @@
 // TODO: implement Spotlight
 // TODO: implement Spotlights
 // TODO: implement Timestamp
-// TODO: implement User
-// TODO: implement UserCompact
-// TODO: implement UserGroup
-// TODO: implement UserStatistics
+
 // TODO: implement WikiPage
