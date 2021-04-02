@@ -3,7 +3,7 @@ package gosu
 type RankStatus int
 
 const (
-	Graveyard = iota - 2
+	Graveyard RankStatus =  iota - 2
 	WIP
 	Pending
 	Ranked

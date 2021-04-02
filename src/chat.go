@@ -4,12 +4,12 @@ package gosu
 type Channel string
 
 const (
-	PUBLIC      = "PUBLIC"
-	PRIVATE     = "PRIVATE"
-	MULTIPLAYER = "MULTIPLAYER"
-	SPECTATOR   = "SPECTATOR"
-	PM          = "PM"
-	GROUP       = "GROUP"
+	PUBLIC      Channel = "PUBLIC"
+	PRIVATE     Channel = "PRIVATE"
+	MULTIPLAYER Channel = "MULTIPLAYER"
+	SPECTATOR   Channel = "SPECTATOR"
+	PM          Channel = "PM"
+	GROUP       Channel = "GROUP"
 )
 
 type BeatmapsetDiscussion struct {
@@ -130,4 +130,35 @@ type CurrentUserAttributes struct {
 	canModerateKudosu bool // can allow or deny kudosu.
 	canResolve        bool // can resolve the discussion.
 	voteScore         int  // current vote given to the discussion.
+}
+
+type ForumPost struct {
+	createdAt  Timestamp
+	deletedAt  Timestamp
+	editedAt   Timestamp
+	editedByID int
+	forumID    int
+	id         int
+	topicID    int
+	userID     int
+
+	// Optional fields
+
+	bodyHTML string // post content in HTML format.
+	bodyRaw  string // post content in BBCode format.
+}
+
+type ForumTopic struct {
+	createdAt   Timestamp
+	deletedAt   Timestamp
+	firstPostID int
+	forumID     int
+	id          int
+	isLocked    bool
+	lastPostID  int
+	postCount   int
+	title       string
+	topicType   string    // normal, sticky, or announcement
+	editedAt    Timestamp // normally called "updatedAt"
+	userID      int
 }
