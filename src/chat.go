@@ -12,8 +12,6 @@ const (
 	GROUP       = "GROUP"
 )
 
-const ()
-
 type BeatmapsetDiscussion struct {
 	beatmap               BeatmapCompact
 	beatmapID             int
@@ -23,40 +21,40 @@ type BeatmapsetDiscussion struct {
 	canGrandKudosu        bool
 	createdAt             string
 	currentUserAttributes CurrentUserAttributes
-	deletedAt             string // TODO: may become a Timestamp object
+	deletedAt             Timestamp
 	deletedByID           int
 	id                    int
 	kudosuDenied          bool
-	lastPostAt            string // TODO: may become a Timestamp object
+	lastPostAt            Timestamp
 	messageType           string // FIXME: originally a "MessageType" object, not in docs
 	parentID              int
 	posts                 []BeatmapsetDiscussionPost
 	resolved              bool
 	startingPost          BeatmapsetDiscussionPost
-	timestamp             int    // TODO: may become a Timestamp object
-	updatedAt             string // TODO: may become a Timestamp object
+	timestamp             Timestamp
+	updatedAt             Timestamp
 	userID                int
 	votes                 []BeatmapsetDiscussionVote // FIXME: structure will change
 }
 
 type BeatmapsetDiscussionPost struct {
 	beatmapsetDiscussionID int
-	createdAt              string // TODO: may become a Timestamp object
-	deletedAt              string // TODO: may become a Timestamp object
+	createdAt              Timestamp
+	deletedAt              Timestamp
 	deletedByID            int
 	id                     int
 	lastEditorID           int
 	message                string
 	system                 bool
-	updatedAt              string // TODO: may become a Timestamp object
+	updatedAt              Timestamp
 	userID                 int
 }
 type BeatmapsetDiscussionVote struct {
 	beatmapsetDiscussionID int
-	createdAt              string // TODO: may become a Timestamp object
+	createdAt              Timestamp
 	id                     int
 	score                  int
-	updatedAt              string // TODO: may become a Timestamp object
+	updatedAt              Timestamp
 	userID                 int
 }
 

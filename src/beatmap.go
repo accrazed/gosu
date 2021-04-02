@@ -10,11 +10,11 @@ type Beatmap struct {
 	countCircles int
 	countSliders int
 	cs           float64
-	deletedAt    string // TODO: may become a Timestamp object
+	deletedAt    Timestamp
 	drain        float64
 	hitLength    int
 	isScoreable  bool
-	lastUpdated  string // TODO: may become a Timestamp object
+	lastUpdated  Timestamp
 	modeInt      int
 	passCount    int
 	playCount    int
@@ -25,7 +25,7 @@ type Beatmap struct {
 type BeatmapCompact struct {
 	difficultyRating float64
 	id               int
-	mode             Gamemode
+	mode             GameMode
 	status           RankStatus
 	totalLength      int
 	version          string

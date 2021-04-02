@@ -12,15 +12,14 @@ type Beatmapset struct {
 	currentHype         int
 	requiredHype        int
 	isScoreable         bool
-	lastUpdated         string // TODO: may become a string // TODO: may become a Timestamp object object
+	lastUpdated         Timestamp
 	legacyThreadURL     string
 	currentNominations  int
 	requiredNominations int
 	ranked              int
-	rankedDate          string // TODO: may become a string // TODO: may become a Timestamp object object
-	source              string
+	rankedDate          Timestamp
 	storyboard          bool
-	submittedDate       string // TODO: may become a string // TODO: may become a Timestamp object object
+	submittedDate       Timestamp
 	tags                string
 }
 
@@ -54,7 +53,7 @@ type BeatmapsetCompact struct {
 	language              string
 	nominations           string
 	ratings               string
-	recent_favourites     string
-	related_users         string
+	recentFavorites       string
+	relatedUsers          string
 	user                  string
 }
