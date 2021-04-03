@@ -162,3 +162,23 @@ type ForumTopic struct {
 	EditedAt    Timestamp // normally called "updatedAt"
 	UserID      int
 }
+
+type KudosuHistory struct {
+	ID        int
+	Action    string // Either give, reset, or revoke
+	Amount    int
+	Model     string // Object type which the exchange happened on (forum_post, etc)
+	CreatedAt Timestamp
+	Giver     Giver // Simple detail of the user who started the exchange.
+	Post      Post  // Simple detail of the object for display.
+}
+
+type Giver struct {
+	URL      string
+	Username string
+}
+
+type Post struct {
+	URL   string // Url of the object
+	Title string // Title of the object. It'll be "[deleted beatmap]" for deleted beatmaps.
+}

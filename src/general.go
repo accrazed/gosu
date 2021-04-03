@@ -9,3 +9,13 @@ type Cursor struct {
 type Timestamp struct {
 	Time string
 }
+
+type WikiPage struct {
+	Layout   string   // The layout type for the page.
+	Locale   string   // All lowercase BCP 47 language tag.
+	Markdown string   // Markdown content.
+	Path     string   // Path of the article.
+	Subtitle string   // 	The article's subtitle.
+	Tags     []string // Associated tags for the article.
+	Title    string   // The article's title.
+}

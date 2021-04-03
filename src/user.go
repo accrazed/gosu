@@ -23,14 +23,15 @@ type ProfileBanner struct {
 	Image        string
 }
 
+// FIXME: unspecified types
 type ProfilePage struct {
-	Me             string // FIXME: unspecified type
-	RecentActivity string // FIXME: unspecified type
-	Beatmaps       string // FIXME: unspecified type
-	Historical     string // FIXME: unspecified type
-	Kudosu         string // FIXME: unspecified type
-	TopRanks       string // FIXME: unspecified type
-	Medals         string // FIXME: unspecified type
+	Me             string
+	RecentActivity string
+	Beatmaps       string
+	Historical     string
+	Kudosu         string
+	TopRanks       string
+	Medals         string
 }
 type User struct {
 	UserCompact

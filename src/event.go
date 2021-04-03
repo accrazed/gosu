@@ -124,3 +124,14 @@ type EventUsernameChange struct {
 type Achievement struct {
 	// TODO: implement once specified in docs
 }
+
+type Notification struct {
+	ID           int
+	Name         string //Name of the event
+	CreatedAt    string //ISO 8601 date
+	ObjectType   string
+	ObjectID     int
+	SourceUserID int
+	IsRead       bool
+	Details      string // message_id of last known message (only returned in presence responses)
+}
