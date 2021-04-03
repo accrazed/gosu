@@ -1,12 +1,12 @@
 package gosu
 
 type Covers struct {
-	cover       string
-	cover2X     string
-	card        string
-	card2X      string
-	list        string
-	list2X      string
-	slimCover   string
-	slimCover2X string
+	Cover       string
+	Cover2X     string
+	Card        string
+	Card2X      string
+	List        string
+	List2X      string
+	SlimCover   string
+	SlimCover2X string
 }

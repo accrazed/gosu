@@ -13,152 +13,152 @@ const (
 )
 
 type BeatmapsetDiscussion struct {
-	beatmap               BeatmapCompact
-	beatmapID             int
-	beatmapset            BeatmapsetCompact
-	beatmapsetID          int
-	canBeResolved         bool
-	canGrandKudosu        bool
-	createdAt             string
-	currentUserAttributes CurrentUserAttributes
-	deletedAt             Timestamp
-	deletedByID           int
-	id                    int
-	kudosuDenied          bool
-	lastPostAt            Timestamp
-	messageType           string // FIXME: originally a "MessageType" object, not in docs
-	parentID              int
-	posts                 []BeatmapsetDiscussionPost
-	resolved              bool
-	startingPost          BeatmapsetDiscussionPost
-	timestamp             Timestamp
-	updatedAt             Timestamp
-	userID                int
-	votes                 []BeatmapsetDiscussionVote // FIXME: structure will change
+	Beatmap               BeatmapCompact
+	BeatmapID             int
+	Beatmapset            BeatmapsetCompact
+	BeatmapsetID          int
+	CanBeResolved         bool
+	CanGrandKudosu        bool
+	CreatedAt             string
+	CurrentUserAttributes CurrentUserAttributes
+	DeletedAt             Timestamp
+	DeletedByID           int
+	ID                    int
+	KudosuDenied          bool
+	LastPostAt            Timestamp
+	MessageType           string // FIXME: originally a "MessageType" object, not in docs
+	ParentID              int
+	Posts                 []BeatmapsetDiscussionPost
+	Resolved              bool
+	StartingPost          BeatmapsetDiscussionPost
+	Timestamp             Timestamp
+	UpdatedAt             Timestamp
+	UserID                int
+	Votes                 []BeatmapsetDiscussionVote // FIXME: structure will change
 }
 
 type BeatmapsetDiscussionPost struct {
-	beatmapsetDiscussionID int
-	createdAt              Timestamp
-	deletedAt              Timestamp
-	deletedByID            int
-	id                     int
-	lastEditorID           int
-	message                string
-	system                 bool
-	updatedAt              Timestamp
-	userID                 int
+	BeatmapsetDiscussionID int
+	CreatedAt              Timestamp
+	DeletedAt              Timestamp
+	DeletedByID            int
+	ID                     int
+	LastEditorID           int
+	Message                string
+	System                 bool
+	UpdatedAt              Timestamp
+	UserID                 int
 }
 type BeatmapsetDiscussionVote struct {
-	beatmapsetDiscussionID int
-	createdAt              Timestamp
-	id                     int
-	score                  int
-	updatedAt              Timestamp
-	userID                 int
+	BeatmapsetDiscussionID int
+	CreatedAt              Timestamp
+	ID                     int
+	Score                  int
+	UpdatedAt              Timestamp
+	UserID                 int
 }
 
 type ChatChannel struct {
-	channelID      int
-	name           string
-	description    string
-	icon           string        // display icon for the channel
-	channelType    Channel       // see channel types below
-	firstMessageID int           // messageID of first message (only returned in presence responses)
-	lastReadID     int           // messageID of last message read (only returned in presence responses)
-	lastMessageID  int           // messageID of last known message (only returned in presence responses)
-	recentMessages []ChatMessage // up to 50 most recent messages
-	moderated      bool          // user can't send message when the value is true (only returned in presence responses)
-	users          []int         // array of userID that are in the channel (not included for PUBLIC channels)
+	ChannelID      int
+	Name           string
+	Description    string
+	Icon           string        // display icon for the channel
+	ChannelType    Channel       // see channel types below
+	FirstMessageID int           // messageID of first message (only returned in presence responses)
+	LastReadID     int           // messageID of last message read (only returned in presence responses)
+	LastMessageID  int           // messageID of last known message (only returned in presence responses)
+	RecentMessages []ChatMessage // up to 50 most recent messages
+	Moderated      bool          // user can't send message when the value is true (only returned in presence responses)
+	Users          []int         // array of userID that are in the channel (not included for PUBLIC channels)
 }
 
 type ChatMessage struct {
-	messageID int         // unique identifier for message
-	senderID  int         // userID of the sender
-	channelID int         // channelID of where the message was sent
-	timestamp string      // when the message was sent, ISO-8601
-	content   string      // message content
-	isAction  bool        // was this an action i.e. /me dances
-	sender    UserCompact // embeded UserCompact object to save additional api lookups
+	MessageID int         // unique Identifier for message
+	SenderID  int         // userID of the sender
+	ChannelID int         // channelID of where the message was sent
+	Timestamp Timestamp   // when the message was sent, ISO-8601
+	Content   string      // message content
+	IsAction  bool        // was this an action i.e. /me dances
+	Sender    UserCompact // embeded UserCompact object to save additional api lookups
 }
 type Comment struct {
-	commentableID   int    // ID of the object the comment is attached to
-	commentableType string // type of object the comment is attached to
-	createdAt       string // ISO 8601 date
-	deletedAt       string // ISO 8601 date if the comment was deleted; null, otherwise
-	editedAt        string // ISO 8601 date if the comment was edited; null, otherwise
-	editedByID      int    // user id of the user that edited the post; null, otherwise
-	id              int    // the ID of the comment
-	legacyName      string // username displayed on legacy comments
-	message         string // markdown of the comment's content
-	messageHTML     string // html version of the comment's content
-	parentID        int    // ID of the comment's parent
-	pinned          bool   // Pin status of the comment
-	repliesCount    int    // int of replies to the comment
-	updatedAt       string // ISO 8601 date
-	userID          int    // user ID of the poster
-	votesCount      int    // int of votes
+	CommentableID   int    // ID of the object the comment is attached to
+	CommentableType string // type of object the comment is attached to
+	CreatedAt       string // ISO 8601 date
+	DeletedAt       string // ISO 8601 date if the comment was deleted; null, otherwise
+	EditedAt        string // ISO 8601 date if the comment was edited; null, otherwise
+	EditedByID      int    // user ID of the user that edited the post; null, otherwise
+	ID              int    // the ID of the comment
+	LegacyName      string // username displayed on legacy comments
+	Message         string // markdown of the comment's content
+	MessageHTML     string // html version of the comment's content
+	ParentID        int    // ID of the comment's parent
+	Pinned          bool   // Pin status of the comment
+	RepliesCount    int    // int of replies to the comment
+	UpdatedAt       string // ISO 8601 date
+	UserID          int    // user ID of the poster
+	VotesCount      int    // int of votes
 }
 type CommentBundle struct {
-	commentableMeta  CommentableMeta // ID of the object the comment is attached to
-	comments         []Comment       // array of comments ordered according to sort;
-	cursor           Cursor          // no desc
-	hasMore          bool            // If there are more comments or replies available
-	hasMoreID        int             // no desc
-	includedComments []Comment       // related comments; e.g. parent comments and nested replies
-	pinnedComments   []Comment       // pinned comments
-	sort             string          // one of the CommentSort types
-	topLevelCount    int             // num of comments at the top level. Not returned for replies.
-	total            int             // total num of comments. Not retuned for replies.
-	userFollow       bool            // is the current user watching the comment thread
-	userVotes        []int           // IDs of the comments in the bundle the current user has upvoted
-	users            []UserCompact   // array of users related to the comments
+	CommentableMeta  CommentableMeta // ID of the object the comment is attached to
+	Comments         []Comment       // array of comments ordered according to sort;
+	Cursor           Cursor          // no desc
+	HasMore          bool            // If there are more comments or replies available
+	HasMoreID        int             // no desc
+	IncludedComments []Comment       // related comments; e.g. parent comments and nested replies
+	PinnedComments   []Comment       // pinned comments
+	Sort             string          // one of the CommentSort types
+	TopLevelCount    int             // num of comments at the top level. Not returned for replies.
+	Total            int             // total num of comments. Not retuned for replies.
+	UserFollow       bool            // is the current user watching the comment thread
+	UserVotes        []int           // IDs of the comments in the bundle the current user has upvoted
+	Users            []UserCompact   // array of users related to the comments
 }
 
 // TODO: IMPLEMENT TYPE "CommentSort" once I know what it actually is
 
 type CommentableMeta struct {
-	id         int    // the ID of the object
-	title      string // display title
-	objectType string // the type of the object
-	url        string // url of the object
+	ID         int    // the ID of the object
+	Title      string // display title
+	ObjectType string // the type of the object
+	URL        string // URL of the object
 }
 
 type CurrentUserAttributes struct {
-	canDestroy        bool // can delete the discussion.
-	canReopen         bool // can reopen the discussion.
-	canModerateKudosu bool // can allow or deny kudosu.
-	canResolve        bool // can resolve the discussion.
-	voteScore         int  // current vote given to the discussion.
+	CanDestroy        bool // can delete the discussion.
+	CanReopen         bool // can reopen the discussion.
+	CanModerateKudosu bool // can allow or deny kudosu.
+	CanResolve        bool // can resolve the discussion.
+	VoteScore         int  // current vote given to the discussion.
 }
 
 type ForumPost struct {
-	createdAt  Timestamp
-	deletedAt  Timestamp
-	editedAt   Timestamp
-	editedByID int
-	forumID    int
-	id         int
-	topicID    int
-	userID     int
+	CreatedAt  Timestamp
+	DeletedAt  Timestamp
+	EditedAt   Timestamp
+	EditedByID int
+	ForumID    int
+	ID         int
+	TopicID    int
+	UserID     int
 
 	// Optional fields
 
-	bodyHTML string // post content in HTML format.
-	bodyRaw  string // post content in BBCode format.
+	BodyHTML string // post content in HTML format.
+	BodyRaw  string // post content in BBCode format.
 }
 
 type ForumTopic struct {
-	createdAt   Timestamp
-	deletedAt   Timestamp
-	firstPostID int
-	forumID     int
-	id          int
-	isLocked    bool
-	lastPostID  int
-	postCount   int
-	title       string
-	topicType   string    // normal, sticky, or announcement
-	editedAt    Timestamp // normally called "updatedAt"
-	userID      int
+	CreatedAt   Timestamp
+	DeletedAt   Timestamp
+	FirstPostID int
+	ForumID     int
+	ID          int
+	IsLocked    bool
+	LastPostID  int
+	PostCount   int
+	Title       string
+	TopicType   string    // normal, sticky, or announcement
+	EditedAt    Timestamp // normally called "updatedAt"
+	UserID      int
 }

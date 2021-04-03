@@ -1,141 +1,141 @@
 package gosu
 
 type GradeCounts struct {
-	a   int // Number of A ranked scores.
-	s   int // Number of S ranked scores.
-	sh  int // Number of Silver S ranked scores.
-	ss  int // Number of SS ranked scores.
-	ssh int // Number of Silver SS ranked scores.
+	A   int // Number of A ranked scores.
+	S   int // Number of S ranked scores.
+	SH  int // Number of Silver S ranked scores.
+	SS  int // Number of SS ranked scores.
+	SSH int // Number of Silver SS ranked scores.
 }
 type Group struct {
-	id             int
-	identifier     string // Unique string to identify the group.
-	isProbationary string // Whether members of this group are considered probationary.
-	hasPlaymodes   bool   // If this group associates GameModes with a user's membership, e.g. BN/NAT members
-	name           string
-	shortName      string // Short name of the group for display.
-	description    string
-	color          string
+	ID             int
+	Identifier     string // Unique string to identify the group.
+	IsProbationary string // Whether members of this group are considered probationary.
+	HasPlaymodes   bool   // If this group associates GameModes with a user's membership, e.g. BN/NAT members
+	Name           string
+	ShortName      string // Short Name of the group for display.
+	Description    string
+	Color          string
 }
 type ProfileBanner struct {
-	id           int
-	tournamentID int
-	image        string
+	ID           int
+	TournamentID int
+	Image        string
 }
 
 type ProfilePage struct {
-	me             string // FIXME: unspecified type
-	recentActivity string // FIXME: unspecified type
-	beatmaps       string // FIXME: unspecified type
-	historical     string // FIXME: unspecified type
-	kudosu         string // FIXME: unspecified type
-	topRanks       string // FIXME: unspecified type
-	medals         string // FIXME: unspecified type
+	Me             string // FIXME: unspecified type
+	RecentActivity string // FIXME: unspecified type
+	Beatmaps       string // FIXME: unspecified type
+	Historical     string // FIXME: unspecified type
+	Kudosu         string // FIXME: unspecified type
+	TopRanks       string // FIXME: unspecified type
+	Medals         string // FIXME: unspecified type
 }
 type User struct {
 	UserCompact
-	coverURL        string // url of profile cover
-	discord         string //
-	hasSupported    bool   // whether or not ever being a supporter in the past
-	interests       string //
-	joinDate        Timestamp
-	availableKudosu int           //
-	totalKudosu     int           //
-	location        string        //
-	maxBlocks       int           // maximum int of users allowed to be blocked
-	maxFriends      int           // maximum int of friends allowed to be added
-	occupation      string        //
-	playmode        GameMode      //
-	playstyle       string        // Device choices of the user.
-	postCount       int           // int of forum posts
-	profileOrder    []ProfilePage // ordered array of sections in user profile page
-	title           string        // user-specific title
-	titleURL        string        //
-	twitter         string        //
-	website         string        //
+	CoverURL        string // URL of profile cover
+	Discord         string //
+	HasSupported    bool   // whether or not ever being a supporter in the past
+	Interests       string //
+	JoinDate        Timestamp
+	AvailableKudosu int           //
+	TotalKudosu     int           //
+	Location        string        //
+	MaxBlocks       int           // maximum int of users allowed to be blocked
+	MaxFriends      int           // maximum int of friends allowed to be added
+	Occupation      string        //
+	Playmode        GameMode      //
+	Playstyle       string        // Device choices of the user.
+	PostCount       int           // int of forum posts
+	ProfileOrder    []ProfilePage // ordered array of sections in user profile page
+	Title           string        // user-specific title
+	TitleURL        string        //
+	Twitter         string        //
+	Website         string        //
 }
 type UserAccountHistory struct {
-	id        int       //
-	userType  string    // .note, restriction, or silence.
-	timestamp Timestamp //
-	length    int       // In seconds.
+	ID        int       //
+	UserType  string    // .note, restriction, or silence.
+	Timestamp Timestamp //
+	Length    int       // In seconds.
 }
 type UserBadge struct {
-	awardedAt   Timestamp
-	description string
-	imageURL    string
-	url         string
+	AwardedAt   Timestamp
+	Description string
+	ImageURL    string
+	URL         string
 }
 type UserCompact struct {
-	avatarURL     string    // url of user's avatar
-	countryCode   string    // two-letter code representing user's country
-	defaultGroup  string    // Identifier of the default Group the user belongs to.
-	id            int       // unique identifier for user
-	isActive      bool      // has this account been active in the last x months?
-	isBot         bool      // is this a bot account?
-	isDeleted     bool      // is the user currently online? (either on lazer or the new website)
-	isOnline      bool      //
-	isSupporter   bool      // does this user have supporter?
-	lastVisit     Timestamp // last access time. null if the user hides online presence
-	pmFriendsOnly bool      // whether or not the user allows PM from other than friends
-	profileColor  string    // color of username/profile highlight, hex code (e.g. #333333)
-	username      string    // user's display name
+	AvatarURL     string    // URL of user's avatar
+	CountryCode   string    // two-letter code representing user's country
+	DefaultGroup  string    // Identifier of the default Group the user belongs to.
+	ID            int       // unique identifier for user
+	IsActive      bool      // has this account been active in the last x months?
+	IsBot         bool      // is this a bot account?
+	IsDeleted     bool      // is the user currently online? (either on lazer or the new website)
+	IsOnline      bool      //
+	IsSupporter   bool      // does this user have supporter?
+	LastVisit     Timestamp // last access time. null if the user hides online presence
+	PMFriendsOnly bool      // whether or not the user allows PM from other than friends
+	ProfileColor  string    // color of username/profile highlight, hex code (e.g. #333333)
+	Username      string    // user's display Name
 
 	// Optional attributes
-	accountHistory                   []UserAccountHistory
-	activeTournamentsBanner          ProfileBanner
-	badges                           []UserBadge
+	AccountHistory                   []UserAccountHistory
+	ActiveTournamentsBanner          ProfileBanner
+	Badges                           []UserBadge
 	BeatmapsPlaycountCount           int
-	blocks                           string // FIXME: Unspecified in docs
-	country                          string // FIXME: Unspecified in docs
-	cover                            Covers // FIXME: Unspecified in docs
-	favoriteBeatmapsetCount          int
-	followerCount                    int
-	friends                          []string // FIXME: Unspecified in docs
-	graveyardBeatmapsetCount         int
-	groups                           []UserGroup
-	isAdmin                          bool
-	isBNG                            bool
-	isFullBN                         bool
-	isGMT                            bool
-	isLimitedBN                      bool
-	isModerator                      bool
-	isNAT                            bool
-	isRestricted                     bool
-	isSilenced                       bool
-	lovedBeatmapsetCount             int
-	monthlyPlaycounts                []UserMonthlyPlaycount
-	page                             string   // FIXME: Unspecified in docs
-	previousUsernames                []string // FIXME: Unspecified in docs
-	rankedAndApprovedBeatmapsetCount int
-	replaysWatchedCount              int
-	scoresBestCount                  int
-	scoresFirstCount                 int
-	scoresRecentCount                int
-	statistics                       *UserStatistics // FIXME: Unspecified in docs
-	statisticsRulesets               UserStatisticsRulesets
-	supportLevel                     int    // FIXME: Unspecified in docs
-	unrankedBeatmapsetCount          int    // FIXME: Unspecified in docs
-	unreadPMCount                    int    // FIXME: Unspecified in docs
-	userAchievements                 int    // FIXME: Unspecified in docs
-	userPreferences                  string // FIXME: Unspecified in docs
-	rankHistory                      string // FIXME: Unspecified in docs
+	Blocks                           string // FIXME: Unspecified in docs
+	Country                          string // FIXME: Unspecified in docs
+	Cover                            Covers // FIXME: Unspecified in docs
+	FavoriteBeatmapsetCount          int
+	FollowerCount                    int
+	Friends                          []string // FIXME: Unspecified in docs
+	GraveyardBeatmapsetCount         int
+	Groups                           []UserGroup
+	IsAdmin                          bool
+	IsBNG                            bool
+	IsFullBN                         bool
+	IsGMT                            bool
+	IsLimitedBN                      bool
+	IsModerator                      bool
+	IsNAT                            bool
+	IsRestricted                     bool
+	IsSilenced                       bool
+	LovedBeatmapsetCount             int
+	MonthlyPlaycounts                []UserMonthlyPlaycount
+	Page                             string   // FIXME: Unspecified in docs
+	PreviousUsernames                []string // FIXME: Unspecified in docs
+	RankedAndApprovedBeatmapsetCount int
+	ReplaysWatchedCount              int
+	ScoresBestCount                  int
+	ScoresFirstCount                 int
+	ScoresRecentCount                int
+	Statistics                       *UserStatistics // FIXME: Unspecified in docs
+	StatisticsRulesets               UserStatisticsRulesets
+	SupportLevel                     int    // FIXME: Unspecified in docs
+	UnrankedBeatmapsetCount          int    // FIXME: Unspecified in docs
+	UnreadPMCount                    int    // FIXME: Unspecified in docs
+	UserAchievements                 int    // FIXME: Unspecified in docs
+	UserPreferences                  string // FIXME: Unspecified in docs
+	RankHistory                      string // FIXME: Unspecified in docs
 }
 
 type UserGroup struct {
-	id             int      // ID (of Group)
-	identifier     string   // Unique string to identify the group.
-	isProbationary bool     // Whether members of this group are considered probationary.
-	name           string   //
-	shortName      string   // Short name of the group for display.
-	description    string   //
-	color          string   //
-	playmodes      []string // GameModes which the member is responsible for, e.g. in the case of BN/NAT (only present when hasPlaymodes is set on Group)
+	ID             int      // ID (of Group)
+	Identifier     string   // Unique string to identify the group.
+	IsProbationary bool     // Whether members of this group are considered probationary.
+	Name           string   //
+	ShortName      string   // Short Name of the group for display.
+	Description    string   //
+	Color          string   //
+	Playmodes      []string // GameModes which the member is responsible for, e.g. in the case of BN/NAT (only present when hasPlaymodes is set on Group)
 }
 
 type UserLevel struct {
-	current  int
-	progress int
+	Current  int
+	Progress int
 }
 
 type UserMonthlyPlaycount struct {
@@ -143,21 +143,21 @@ type UserMonthlyPlaycount struct {
 }
 
 type UserStatistics struct {
-	gradeCounts            GradeCounts
-	hitAccuracy            int          // Hit accuracy percentage
-	isRanked               bool         // Is actively ranked
-	levelCurrent           int          // Current level.
-	levelProgress          int          // Progress to next level.
-	maxCombo               int          // Highest maximum combo.
-	playCount              int          // Number of maps played.
-	playTime               int          // Cumulative time played.
-	pp                     int          // Performance points
-	globalRanke            int          // Current rank according to pp.
-	rankedScore            int          // Current ranked score.
-	replaysWatchedByOthers int          // Number of replays watched by other users.
-	totalHits              int          // Total int of hits.
-	totalScore             int          // Total score.
-	user                   *UserCompact // The associated user.
+	GradeCounts            GradeCounts
+	HitAccuracy            int          // Hit accuracy percentage
+	IsRanked               bool         // Is actively ranked
+	LevelCurrent           int          // Current level.
+	LevelProgress          int          // Progress to next level.
+	MaxCombo               int          // Highest maximum combo.
+	PlayCount              int          // Number of maps played.
+	PlayTime               int          // Cumulative time played.
+	PP                     int          // Performance points
+	GlobalRank             int          // Current rank according to pp.
+	RankedScore            int          // Current ranked score.
+	ReplaysWatchedByOthers int          // Number of replays watched by other users.
+	TotalHits              int          // Total int of hits.
+	TotalScore             int          // Total score.
+	User                   *UserCompact // The associated user.
 }
 
 type UserStatisticsRulesets struct {

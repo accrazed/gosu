@@ -2,58 +2,58 @@ package gosu
 
 type Beatmapset struct {
 	BeatmapsetCompact
-	downloadDisabled    bool
-	moreInformation     string
-	bpm                 float64
-	canBeHyped          bool
-	creator             string
-	discussionEnabled   bool
-	discussionLocked    bool
-	currentHype         int
-	requiredHype        int
-	isScoreable         bool
-	lastUpdated         Timestamp
-	legacyThreadURL     string
-	currentNominations  int
-	requiredNominations int
-	ranked              int
-	rankedDate          Timestamp
-	storyboard          bool
-	submittedDate       Timestamp
-	tags                string
+	DownloadDisabled    bool
+	MoreInformation     string
+	BPM                 float64
+	CanBeHyped          bool
+	Creator             string
+	DiscussionEnabled   bool
+	DiscussionLocked    bool
+	CurrentHype         int
+	RequiredHype        int
+	IsScoreable         bool
+	LastUpdated         Timestamp
+	LegacyThreadURL     string
+	CurrentNominations  int
+	RequiredNominations int
+	Ranked              int
+	RankedDate          Timestamp
+	Storyboard          bool
+	SubmittedDate       Timestamp
+	Tags                string
 }
 
 type BeatmapsetCompact struct {
-	artist        string
-	artistUnicode string
-	covers        Covers
-	creator       string
-	favoriteCount int
-	id            int
-	nsfw          bool
-	playCount     int
-	previewURL    string
-	source        string
-	status        RankStatus
-	title         string
-	titleUnicode  string
-	userID        int
-	video         string
+	Artist        string
+	ArtistUnicode string
+	Covers        Covers
+	Creator       string
+	FavoriteCount int
+	ID            int
+	NSFW          bool
+	PlayCount     int
+	PreviewURL    string
+	Source        string
+	Status        RankStatus
+	Title         string
+	TitleUnicode  string
+	UserID        int
+	Video         string
 
 	// Optional attributes
 	// FIXME: Actual Types for most of these fields are unspecified
-	beatmaps              []Beatmap
-	converts              string
-	currentUserAttributes string
-	description           string
-	discussions           string
-	events                string
-	genre                 string
-	hasFavorited          bool // always included
-	language              string
-	nominations           string
-	ratings               string
-	recentFavorites       string
-	relatedUsers          string
-	user                  string
+	Beatmaps              []Beatmap
+	Converts              string
+	CurrentUserAttributes string
+	Description           string
+	Discussions           string
+	Events                string
+	Genre                 string
+	HasFavorited          bool // always included
+	Language              string
+	Nominations           string
+	Ratings               string
+	RecentFavorites       string
+	RelatedUsers          string
+	User                  string
 }

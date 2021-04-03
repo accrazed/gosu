@@ -2,38 +2,39 @@ package gosu
 
 // FIXME: Score struct has no type specifications
 type Score struct {
-	id         int
-	bestID     int
-	userID     int
-	accuracy   float64
-	mods       GameMod
-	score      int
-	maxCombo   int
-	perfect    bool
-	statistics ScoreCount
-	pp         float64
-	rank       RankStatus
-	createdAt  Timestamp
-	mode       string
-	modeInt    int
-	replay     string
+	ID         int
+	BestID     int
+	UserID     int
+	Accuracy   float64
+	Mods       GameMod
+	Score      int
+	MaxCombo   int
+	Perfect    bool
+	Statistics ScoreCount
+	PP         float64
+	Rank       RankStatus
+	CreatedAt  Timestamp
+	Mode       string
+	ModeInt    int
+	Replay     string
 
 	// Optional attributes
-	beatmap     Beatmap
-	beatmapset  Beatmapset
-	rankCountry int
-	rankGlobal  int
-	weight      float64
-	user        User
-	match       string
+	Beatmap     Beatmap
+	Beatmapset  Beatmapset
+	RankCountry int
+	RankGlobal  int
+	Weight      float64
+	User        User
+	Match       string
 }
+
 type ScoreCount struct {
-	count50   int
-	count100  int
-	count300  int
-	countGeki int
-	countKatu int
-	countMiss int
+	Count50   int
+	Count100  int
+	Count300  int
+	CountGeki int
+	CountKatu int
+	CountMiss int
 }
 
 type GameMod int
