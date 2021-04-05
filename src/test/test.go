@@ -20,8 +20,10 @@ func getEnvVar(key string) string {
 
 func main() {
 	godotenv.Load()
-	test := gosu.GetOauthToken(getEnvVar("GOSU_CLIENT_SECRET"), getEnvVar("GOSU_CLIENT_ID"))
+	test, err := gosu.RevalidateOAuthToken(getEnvVar("GOSU_CLIENT_SECRET"), getEnvVar("GOSU_CLIENT_ID"))
 
-	fmt.Println(test)
-	fmt.Printf("%d %d %d %d\n%s", gosu.Graveyard, gosu.Loved, gosu.Mania, gosu.Taiko, getEnvVar("GOSU_CLIENT_SECRET"))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(*test)
 }
