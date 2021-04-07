@@ -1,6 +1,7 @@
 package gosu
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -169,16 +170,26 @@ func (c *GosuClient) ValidateToken() error {
 	return nil
 }
 
+/*
+ Send a request to the Gosu client, given:
+	`method`: "GET/POST"
+	`url`: the HTTP request url, e.g. "beatmaps/lookup"
+	`params`: the parameters, in map[string]interface{}{...} format
+*/
 func (c *GosuClient) DoRequest(method string, url string, params map[string]interface{}) ([]byte, error) {
-	if req, err := http.NewRequest(method, baseURL+url, nil); err != nil {
+	// Create a new request with the osu api url and method
+	if args, err := json.Marshal(params); err != nil {
+		fmt.Println("Error parsing parameters: %w", err)
+		return nil, err
+	} else if req, err := http.NewRequest(method, baseURL+url, bytes.NewBuffer(args)); err != nil {
 		fmt.Println("Error creating http request: %w", err)
 		return []byte(""), err
 	} else {
-		for k, v := range params {
-			req.Form.Add(k, fmt.Sprintf("%v", v))
-		}
+		// Add header token
 		req.Header.Add("Authorization", "Bearer "+c.Token)
+		req.Header.Add("Content-type", "application/json")
 
+		// Send the request
 		var resp *http.Response
 		if resp, err = c.cliHttp.Do(req); err != nil {
 			fmt.Println("Error doing Request: %w", err)
@@ -187,6 +198,7 @@ func (c *GosuClient) DoRequest(method string, url string, params map[string]inte
 
 		defer resp.Body.Close()
 
+		// Turn the request into a string, and return
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			fmt.Println("Error in reading response: %w", err)

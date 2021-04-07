@@ -1,5 +1,7 @@
 package gosu
 
+import "time"
+
 // FIXME: Score struct has no type specifications
 type Score struct {
 	ID         int
@@ -13,7 +15,7 @@ type Score struct {
 	Statistics ScoreCount
 	PP         float64
 	Rank       RankStatus
-	CreatedAt  Timestamp
+	CreatedAt  time.Time
 	Mode       string
 	ModeInt    int
 	Replay     string

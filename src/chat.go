@@ -1,5 +1,7 @@
 package gosu
 
+import "time"
+
 // See https://osu.ppy.sh/docs/index.html?javascript#chatchannel
 type Channel string
 
@@ -21,40 +23,40 @@ type BeatmapsetDiscussion struct {
 	CanGrandKudosu        bool
 	CreatedAt             string
 	CurrentUserAttributes CurrentUserAttributes
-	DeletedAt             Timestamp
+	DeletedAt             time.Time
 	DeletedByID           int
 	ID                    int
 	KudosuDenied          bool
-	LastPostAt            Timestamp
+	LastPostAt            time.Time
 	MessageType           string // FIXME: originally a "MessageType" object, not in docs
 	ParentID              int
 	Posts                 []BeatmapsetDiscussionPost
 	Resolved              bool
 	StartingPost          BeatmapsetDiscussionPost
-	Timestamp             Timestamp
-	UpdatedAt             Timestamp
+	Timestamp             time.Time
+	UpdatedAt             time.Time
 	UserID                int
 	Votes                 []BeatmapsetDiscussionVote // FIXME: structure will change
 }
 
 type BeatmapsetDiscussionPost struct {
 	BeatmapsetDiscussionID int
-	CreatedAt              Timestamp
-	DeletedAt              Timestamp
+	CreatedAt              time.Time
+	DeletedAt              time.Time
 	DeletedByID            int
 	ID                     int
 	LastEditorID           int
 	Message                string
 	System                 bool
-	UpdatedAt              Timestamp
+	UpdatedAt              time.Time
 	UserID                 int
 }
 type BeatmapsetDiscussionVote struct {
 	BeatmapsetDiscussionID int
-	CreatedAt              Timestamp
+	CreatedAt              time.Time
 	ID                     int
 	Score                  int
-	UpdatedAt              Timestamp
+	UpdatedAt              time.Time
 	UserID                 int
 }
 
@@ -76,7 +78,7 @@ type ChatMessage struct {
 	MessageID int         // unique Identifier for message
 	SenderID  int         // userID of the sender
 	ChannelID int         // channelID of where the message was sent
-	Timestamp Timestamp   // when the message was sent, ISO-8601
+	Timestamp time.Time   // when the message was sent, ISO-8601
 	Content   string      // message content
 	IsAction  bool        // was this an action i.e. /me dances
 	Sender    UserCompact // embeded UserCompact object to save additional api lookups
@@ -133,9 +135,9 @@ type CurrentUserAttributes struct {
 }
 
 type ForumPost struct {
-	CreatedAt  Timestamp
-	DeletedAt  Timestamp
-	EditedAt   Timestamp
+	CreatedAt  time.Time
+	DeletedAt  time.Time
+	EditedAt   time.Time
 	EditedByID int
 	ForumID    int
 	ID         int
@@ -149,8 +151,8 @@ type ForumPost struct {
 }
 
 type ForumTopic struct {
-	CreatedAt   Timestamp
-	DeletedAt   Timestamp
+	CreatedAt   time.Time
+	DeletedAt   time.Time
 	FirstPostID int
 	ForumID     int
 	ID          int
@@ -159,7 +161,7 @@ type ForumTopic struct {
 	PostCount   int
 	Title       string
 	TopicType   string    // normal, sticky, or announcement
-	EditedAt    Timestamp // normally called "updatedAt"
+	EditedAt    time.Time // normally called "updatedAt"
 	UserID      int
 }
 
@@ -168,7 +170,7 @@ type KudosuHistory struct {
 	Action    string // Either give, reset, or revoke
 	Amount    int
 	Model     string // Object type which the exchange happened on (forum_post, etc)
-	CreatedAt Timestamp
+	CreatedAt time.Time
 	Giver     Giver // Simple detail of the user who started the exchange.
 	Post      Post  // Simple detail of the object for display.
 }

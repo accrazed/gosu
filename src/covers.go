@@ -1,12 +1,12 @@
 package gosu
 
 type Covers struct {
-	Cover       string
-	Cover2X     string
-	Card        string
-	Card2X      string
-	List        string
-	List2X      string
-	SlimCover   string
-	SlimCover2X string
+	Cover       string `json:"cover"`
+	Cover2X     string `json:"cover@2x"`
+	Card        string `json:"card"`
+	Card2X      string `json:"card@2x"`
+	List        string `json:"list"`
+	List2X      string `json:"list@2x"`
+	SlimCover   string `json:"slimcover"`
+	SlimCover2X string `json:"slimcover@2x"`
 }

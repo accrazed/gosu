@@ -1,5 +1,7 @@
 package gosu
 
+import "time"
+
 type RankStatus int
 
 const (
@@ -30,12 +32,12 @@ type Rankings struct {
 }
 
 type Spotlight struct {
-	EndDate          Timestamp // The end date of the pot
+	EndDate          time.Time // The end date of the pot
 	ID               int       // The ID of this spotl
 	ModeSpecific     int       // If the spotlight has diferent mades specific to each Gam.
 	ParticipantCount int       // The number of users partcipaing in this spotlight. This is only shown when viewing a single spotligt.
 	Name             int       //The Name of the spotliht
-	StartDate        Timestamp // The starting date of he sph
+	StartDate        time.Time // The starting date of he sph
 	SpotlightType    string    // The type of spotligh
 }
 

@@ -9,7 +9,7 @@ import (
 )
 
 func getEnvVar(key string) string {
-	err := godotenv.Load("src/test/.env")
+	err := godotenv.Load(".env")
 
 	if err != nil {
 		fmt.Println("Error loading env file: %w", err)
@@ -20,10 +20,10 @@ func getEnvVar(key string) string {
 
 func main() {
 	godotenv.Load()
-	test, err := gosu.RevalidateOAuthToken(getEnvVar("GOSU_CLIENT_SECRET"), getEnvVar("GOSU_CLIENT_ID"))
+	client, _ := gosu.CreateGosuClient(getEnvVar("GOSU_CLIENT_SECRET"), getEnvVar("GOSU_CLIENT_ID"))
 
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(*test)
+	beatmap, _ := client.LookupBeatmap("2775178", "id")
+
+	fmt.Println(beatmap)
+
 }

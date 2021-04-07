@@ -1,5 +1,7 @@
 package gosu
 
+import "time"
+
 type EventType int
 
 const (
@@ -19,7 +21,7 @@ const (
 )
 
 type Event struct {
-	CreatedAt Timestamp
+	CreatedAt time.Time
 	ID        int
 	EventType EventType
 }

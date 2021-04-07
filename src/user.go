@@ -1,5 +1,7 @@
 package gosu
 
+import "time"
+
 type GradeCounts struct {
 	A   int // Number of A ranked scores.
 	S   int // Number of S ranked scores.
@@ -39,7 +41,7 @@ type User struct {
 	Discord         string //
 	HasSupported    bool   // whether or not ever being a supporter in the past
 	Interests       string //
-	JoinDate        Timestamp
+	JoinDate        time.Time
 	AvailableKudosu int           //
 	TotalKudosu     int           //
 	Location        string        //
@@ -58,11 +60,11 @@ type User struct {
 type UserAccountHistory struct {
 	ID        int       //
 	UserType  string    // .note, restriction, or silence.
-	Timestamp Timestamp //
+	Timestamp time.Time //
 	Length    int       // In seconds.
 }
 type UserBadge struct {
-	AwardedAt   Timestamp
+	AwardedAt   time.Time
 	Description string
 	ImageURL    string
 	URL         string
@@ -77,7 +79,7 @@ type UserCompact struct {
 	IsDeleted     bool      // is the user currently online? (either on lazer or the new website)
 	IsOnline      bool      //
 	IsSupporter   bool      // does this user have supporter?
-	LastVisit     Timestamp // last access time. null if the user hides online presence
+	LastVisit     time.Time // last access time. null if the user hides online presence
 	PMFriendsOnly bool      // whether or not the user allows PM from other than friends
 	ProfileColor  string    // color of username/profile highlight, hex code (e.g. #333333)
 	Username      string    // user's display Name
