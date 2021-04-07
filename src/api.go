@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -17,16 +16,17 @@ const baseURL = "https://osu.ppy.sh/api/v2/"
 const tokenName = "oauth_token.json"
 
 type GosuClient struct {
+	cliHttp      *http.Client
+	Token        string
 	clientSecret string
 	clientID     string
-	token        string
 }
 
 type oauthTokenResponse struct {
-	AccessToken    string
-	ExpiresIn      float64
-	LastAccessTime time.Time
-	TokenType      string
+	AccessToken    string    `json:"access_token"`
+	ExpiresIn      float64   `json:"expires_in"`
+	LastAccessTime time.Time `json:"last_access_time"`
+	TokenType      string    `json:"token_type"`
 }
 
 func RevalidateOAuthToken(clientSecret string, clientID string) (*oauthTokenResponse, error) {
@@ -53,8 +53,8 @@ func RevalidateOAuthToken(clientSecret string, clientID string) (*oauthTokenResp
 			fmt.Println("Error in reading OAuth token: %w", err)
 			return nil, err
 		}
-		// If the token is expired, get a new one
-		if float64(time.Since(previousToken.LastAccessTime).Seconds()) > previousToken.ExpiresIn {
+		// If the token is expired, get a new one (60 second buffer)
+		if float64(time.Since(previousToken.LastAccessTime).Seconds())+60 > previousToken.ExpiresIn {
 			fmt.Println("Token expired. Requesting new token...")
 			if ret, err = requestOAuthToken(clientSecret, clientID); err != nil {
 				fmt.Println("Error requesting Oauth token: %w", err)
@@ -93,15 +93,8 @@ func requestOAuthToken(clientSecret string, clientID string) (*oauthTokenRespons
 		return nil, err
 	}
 
-	// Change formatting so that the variable structure is easily unmarshalable
-	oauthFormatter := strings.NewReplacer(
-		"token_type", "TokenType",
-		"expires_in", "ExpiresIn",
-		"access_token", "AccessToken")
-	formattedBody := oauthFormatter.Replace(string(body))
-
 	// Unmarshal the json into the oauthTokenResponse struct
-	if err := json.Unmarshal([]byte(formattedBody), &ret); err != nil {
+	if err := json.Unmarshal(body, &ret); err != nil {
 		fmt.Println("Error in unmarshaling body: %w", err)
 		return nil, err
 	}
@@ -145,4 +138,61 @@ func writeOAuthToken(path string, token *oauthTokenResponse) error {
 		f.WriteString(string(data))
 	}
 	return nil
+}
+
+func CreateGosuClient(clientSecret string, clientID string) (*GosuClient, error) {
+	var oauthToken *oauthTokenResponse
+	var err error
+
+	if oauthToken, err = RevalidateOAuthToken(clientSecret, clientID); err != nil {
+		fmt.Println("Problem Revalidating Oauth token: %w", err)
+		return nil, err
+	}
+
+	var http_client *http.Client = &http.Client{}
+
+	return &GosuClient{cliHttp: http_client, clientSecret: clientSecret, clientID: clientID, Token: oauthToken.AccessToken}, nil
+}
+
+// Validates Token and updates client with a valid token
+func (c *GosuClient) ValidateToken() error {
+	var oauthToken *oauthTokenResponse
+	var err error
+
+	if oauthToken, err = RevalidateOAuthToken(c.clientSecret, c.clientID); err != nil {
+		fmt.Println("Problem Revalidating Oauth token: %w", err)
+		return err
+	}
+
+	c.Token = oauthToken.AccessToken
+
+	return nil
+}
+
+func (c *GosuClient) DoRequest(method string, url string, params map[string]interface{}) ([]byte, error) {
+	if req, err := http.NewRequest(method, baseURL+url, nil); err != nil {
+		fmt.Println("Error creating http request: %w", err)
+		return []byte(""), err
+	} else {
+		for k, v := range params {
+			req.Form.Add(k, fmt.Sprintf("%v", v))
+		}
+		req.Header.Add("Authorization", "Bearer "+c.Token)
+
+		var resp *http.Response
+		if resp, err = c.cliHttp.Do(req); err != nil {
+			fmt.Println("Error doing Request: %w", err)
+			return []byte(""), err
+		}
+
+		defer resp.Body.Close()
+
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("Error in reading response: %w", err)
+			return []byte(""), err
+		}
+
+		return body, nil
+	}
 }
