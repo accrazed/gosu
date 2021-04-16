@@ -3,7 +3,6 @@ package gosu
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 	"time"
 )
 
@@ -39,10 +38,10 @@ type BeatmapCompact struct {
 	Version          string  `json:"version"`
 
 	// Optional attributes
-	Beatmapset Beatmapset `json:"beatmapset"`
-	Checksum   string     `json:"checksum"`
-	Failtimes  Failtimes  `json:"failtimes"`
-	MaxCombo   int        `json:"max_combo"`
+	Beatmapset BeatmapsetCompact `json:"beatmapset"`
+	Checksum   string            `json:"checksum"`
+	Failtimes  Failtimes         `json:"failtimes"`
+	MaxCombo   int               `json:"max_combo"`
 }
 
 type BeatmapScores struct {
@@ -51,8 +50,8 @@ type BeatmapScores struct {
 }
 
 type BeatmapUserScore struct {
-	Position int
-	Score    Score
+	Position int   `json:"position"`
+	Score    Score `json:"score"`
 }
 
 type Failtimes struct {
@@ -62,22 +61,60 @@ type Failtimes struct {
 
 // Returns a *Beatmap, given data and query type (checksum, filename, or id)
 func (c *GosuClient) LookupBeatmap(data string, queryType string) (*Beatmap, error) {
-	queryType = strings.Trim(queryType, " ")
-
-	// Validate the token
-	if err := c.ValidateToken(); err != nil {
-		fmt.Println("Error in validating token: %w", err)
-		return nil, err
-	}
-
 	var ret *Beatmap
 
 	if resp, err := c.DoRequest("GET", "beatmaps/lookup", map[string]interface{}{queryType: data}); err != nil {
-		fmt.Println("Error in GET request for beatmaps/lookup: %w", err)
+		fmt.Println("Error in GET request for beatmaps/lookup:", err)
 		return nil, err
 	} else {
 		if err = json.Unmarshal(resp, &ret); err != nil {
-			fmt.Println("Error in unmarshaling GET request for beatmaps/lookup: %w", err)
+			fmt.Println("Error in unmarshaling GET request for beatmaps/lookup:", err)
+			return nil, err
+		}
+	}
+
+	return ret, nil
+}
+
+/*
+Returns a *BeatmapUserScore, given:
+	`beatmapID`: the ID of the beatmap
+	`userID`: the user you want to get the score of
+	`params`:
+		`mode`: the gamemode to get scores for (string)
+		`mods`: An array of matching mods
+*/
+func (c *GosuClient) GetUserBeatmapScore(beatmapID string, userID string, params map[string]interface{}) (*BeatmapUserScore, error) {
+	var ret *BeatmapUserScore
+	requestURL := "beatmaps/" + beatmapID + "/scores/users/" + userID
+
+	if resp, err := c.DoRequest("GET", requestURL, params); err != nil {
+		fmt.Println("Error in GET request for beatmaps/{beatmap}/scores/users/{user}:", err)
+		return nil, err
+	} else {
+		if err = json.Unmarshal(resp, &ret); err != nil {
+			fmt.Println("Error in unmarshaling GET request for beatmaps/{beatmap}/scores/users/{user}:", err)
+			return nil, err
+		}
+	}
+
+	return ret, nil
+}
+
+/*
+Returns a *Beatmap, given:
+	`beatmapID`: the ID of the beatmap
+*/
+func (c *GosuClient) GetBeatmap(beatmapID string) (*Beatmap, error) {
+	var ret *Beatmap
+	requestURL := "beatmaps/" + beatmapID
+
+	if resp, err := c.DoRequest("GET", requestURL, nil); err != nil {
+		fmt.Println("Error in GET request for beatmaps/{beatmap}:", err)
+		return nil, err
+	} else {
+		if err = json.Unmarshal(resp, &ret); err != nil {
+			fmt.Println("Error in unmarshaling GET request for beatmaps/{beatmap}:", err)
 			return nil, err
 		}
 	}
