@@ -34,31 +34,30 @@ func RevalidateOAuthToken(clientSecret string, clientID string) (*oauthTokenResp
 	var ret *oauthTokenResponse
 	var err error
 
-	// if oauth token doesn't exist in file dir
+	// if OAuth token doesn't exist in file dir
 	if _, err = os.Stat(tokenName); os.IsNotExist(err) {
-		fmt.Println("Oauth token not detected. requesting new token...")
+		fmt.Println("OAuth token not detected. requesting new token...")
 
 		// Request a new token
 		if ret, err = requestOAuthToken(clientSecret, clientID); err != nil {
-			fmt.Println("Error requesting Oauth token: %w", err)
+			fmt.Println("Error requesting OAuth token:", err)
 		}
 		ret.LastAccessTime = time.Now()
 		writeOAuthToken(tokenName, ret)
 
 		return ret, nil
 	} else {
-		fmt.Println("Oauth token found. Validating and updating timestamp...")
 		var previousToken *oauthTokenResponse
 		// In this case, the oauth token file already exists
 		if previousToken, err = readOAuthToken(tokenName); err != nil {
-			fmt.Println("Error in reading OAuth token: %w", err)
+			fmt.Println("Error in reading OAuth token:", err)
 			return nil, err
 		}
 		// If the token is expired, get a new one (60 second buffer)
 		if float64(time.Since(previousToken.LastAccessTime).Seconds())+60 > previousToken.ExpiresIn {
-			fmt.Println("Token expired. Requesting new token...")
+			fmt.Println("OAuth token expired. Requesting new token...")
 			if ret, err = requestOAuthToken(clientSecret, clientID); err != nil {
-				fmt.Println("Error requesting Oauth token: %w", err)
+				fmt.Println("Error requesting Oauth token:", err)
 			}
 
 			ret.LastAccessTime = time.Now()
@@ -82,7 +81,7 @@ func requestOAuthToken(clientSecret string, clientID string) (*oauthTokenRespons
 		"scope":         {"public"},
 	})
 	if err != nil {
-		fmt.Println("Error in getOauthToken POST: %w", err)
+		fmt.Println("Error in getOauthToken POST:", err)
 		return nil, err
 	}
 
@@ -90,13 +89,13 @@ func requestOAuthToken(clientSecret string, clientID string) (*oauthTokenRespons
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error in reading POST response: %w", err)
+		fmt.Println("Error in reading POST response:", err)
 		return nil, err
 	}
 
 	// Unmarshal the json into the oauthTokenResponse struct
 	if err := json.Unmarshal(body, &ret); err != nil {
-		fmt.Println("Error in unmarshaling body: %w", err)
+		fmt.Println("Error in unmarshaling body:", err)
 		return nil, err
 	}
 
@@ -114,12 +113,12 @@ func readOAuthToken(path string) (*oauthTokenResponse, error) {
 	} else {
 		// Read the file
 		if body, err := os.ReadFile(path); err != nil {
-			fmt.Println("Error reading file: %w", err)
+			fmt.Println("Error reading file:", err)
 			return nil, err
 		} else {
 			// Decode body into ret
 			if err := json.Unmarshal(body, &ret); err != nil {
-				fmt.Println("Error in unmarshaling body: %w", err)
+				fmt.Println("Error in unmarshaling body:", err)
 				return nil, err
 			}
 			return ret, nil
@@ -129,10 +128,10 @@ func readOAuthToken(path string) (*oauthTokenResponse, error) {
 
 func writeOAuthToken(path string, token *oauthTokenResponse) error {
 	if data, err := json.Marshal(token); err != nil {
-		fmt.Println("Error converting struct oauthTokenResponse to json: %w", err)
+		fmt.Println("Error converting struct oauthTokenResponse to json:", err)
 		return err
 	} else if f, err := os.Create(path); err != nil {
-		fmt.Println("Error creating file: %w", err)
+		fmt.Println("Error creating file:", err)
 		return err
 	} else {
 		defer f.Close()
@@ -146,7 +145,7 @@ func CreateGosuClient(clientSecret string, clientID string) (*GosuClient, error)
 	var err error
 
 	if oauthToken, err = RevalidateOAuthToken(clientSecret, clientID); err != nil {
-		fmt.Println("Problem Revalidating Oauth token: %w", err)
+		fmt.Println("Problem Revalidating Oauth token:", err)
 		return nil, err
 	}
 
@@ -156,12 +155,12 @@ func CreateGosuClient(clientSecret string, clientID string) (*GosuClient, error)
 }
 
 // Validates Token and updates client with a valid token
-func (c *GosuClient) ValidateToken() error {
+func (c *GosuClient) validateToken() error {
 	var oauthToken *oauthTokenResponse
 	var err error
 
 	if oauthToken, err = RevalidateOAuthToken(c.clientSecret, c.clientID); err != nil {
-		fmt.Println("Problem Revalidating Oauth token: %w", err)
+		fmt.Println("Problem Revalidating Oauth token:", err)
 		return err
 	}
 
@@ -177,12 +176,18 @@ func (c *GosuClient) ValidateToken() error {
 	`params`: the parameters, in map[string]interface{}{...} format
 */
 func (c *GosuClient) DoRequest(method string, url string, params map[string]interface{}) ([]byte, error) {
+	// Validate the token
+	if err := c.validateToken(); err != nil {
+		fmt.Println("Error in validating token:", err)
+		return nil, err
+	}
+
 	// Create a new request with the osu api url and method
 	if args, err := json.Marshal(params); err != nil {
-		fmt.Println("Error parsing parameters: %w", err)
+		fmt.Println("Error parsing parameters:", err)
 		return nil, err
 	} else if req, err := http.NewRequest(method, baseURL+url, bytes.NewBuffer(args)); err != nil {
-		fmt.Println("Error creating http request: %w", err)
+		fmt.Println("Error creating http request:", err)
 		return []byte(""), err
 	} else {
 		// Add header token
@@ -192,7 +197,7 @@ func (c *GosuClient) DoRequest(method string, url string, params map[string]inte
 		// Send the request
 		var resp *http.Response
 		if resp, err = c.cliHttp.Do(req); err != nil {
-			fmt.Println("Error doing Request: %w", err)
+			fmt.Println("Error doing Request:", err)
 			return []byte(""), err
 		}
 
@@ -201,7 +206,7 @@ func (c *GosuClient) DoRequest(method string, url string, params map[string]inte
 		// Turn the request into a string, and return
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			fmt.Println("Error in reading response: %w", err)
+			fmt.Println("Error in reading response:", err)
 			return []byte(""), err
 		}
 
