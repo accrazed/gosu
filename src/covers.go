@@ -10,3 +10,9 @@ type Covers struct {
 	SlimCover   string `json:"slimcover"`
 	SlimCover2X string `json:"slimcover@2x"`
 }
+
+type UserCover struct {
+	CustomURL string `json:"custom_url"`
+	URL       string `json:"url"`
+	ID        string `json:"id"`
+}

@@ -20,7 +20,7 @@ type BeatmapsetDiscussion struct {
 	Beatmapset            BeatmapsetCompact
 	BeatmapsetID          int
 	CanBeResolved         bool
-	CanGrandKudosu        bool
+	CanGrantKudosu        bool
 	CreatedAt             string
 	CurrentUserAttributes CurrentUserAttributes
 	DeletedAt             time.Time

@@ -3,7 +3,7 @@ package gosu
 import "time"
 
 type Beatmapset struct {
-	BeatmapsetCompact
+	BeatmapsetCompact `json:"beatmapset_compact"`
 	Availability
 	BPM               float64   `json:"bpm"`
 	CanBeHyped        bool      `json:"can_be_hyped"`
