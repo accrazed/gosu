@@ -1,4 +1,4 @@
-module accrazed.com/gosu
+module github.com/AccraZed/gosu
 
 go 1.16
 
